@@ -1,0 +1,7 @@
+{
+  "name": "stumind",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
