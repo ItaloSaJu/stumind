@@ -64,47 +64,18 @@ export class CreateTaskComponent implements OnInit {
   async submit() {
     if (this.form.invalid) return;
 
-    // try {
-    //   const { title_category, title_todo, description_todo } = this.form.value;
-    //   const tsk = {
-    //     title_category: title_category || '',
-    //     todo: [
-    //       {
-    //         title_todo: title_todo ||'',
-    //         description_todo: description_todo || '',
-    //       },
-    //     ],
-    //     inPro: [],
-    //     done: [],
-    //   };
-
-    //   await this._taskService.create(tsk);
-    //   this.route.navigateByUrl('/home/todo');
-    //   console.log('tarea creada');
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-     
-  
       try {
         const { title_category, title_todo, description_todo } = this.form.value;
     
-        // Primero, obtienes el task actual si ya fue creado (por su ID)
-        
         if (this.data) {
-          // Si ya existe la task, actualizas el array "todo" agregando un nuevo objeto
           this.data.todo = this.data.todo || [];
           this.data.todo.push({
             title_todo: title_todo || '',
             description_todo: description_todo || '',
           });
     
-          // Actualizas el task con el nuevo array "todo"
           await this._taskService.updateTask(this.id, this.data);
-          console.log('Tarea actualizada con nuevo todo');
         } else {
-          // Si no existe, creas una nueva task
           const newTask = {
             title_category: title_category || '',
             todo: [

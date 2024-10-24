@@ -43,7 +43,6 @@ export class TaskService {
 
 
   create(task: Task) {
-    console.log(task);
 
     return addDoc(this._collection, task);
   }
@@ -54,7 +53,6 @@ export class TaskService {
 
   getTask(id:string){
     const docRef = doc(this._collection, id)
-    console.log(docRef);
     return getDoc(docRef)
     
   }

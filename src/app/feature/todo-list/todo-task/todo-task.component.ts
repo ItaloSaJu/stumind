@@ -1,6 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TaskService } from '../task-service/task.service';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { MenuComponent } from 'src/app/shared/menu/menu.component';
 import { IonicModule } from '@ionic/angular';
 import { NgFor } from '@angular/common';
@@ -15,94 +21,72 @@ import { Task } from '../task-service/task.service';
   imports: [
     MenuComponent,
     IonicModule,
-    CdkDropList, 
+    CdkDropList,
     CdkDrag,
     NgFor,
     RouterLink,
-    
-  ]
+  ],
 })
-export class TodoTaskComponent  implements OnInit {
+export class TodoTaskComponent implements OnInit {
+  id: string = '';
+  private _taskService = inject(TaskService);
+  private _route = inject(ActivatedRoute);
 
-  id: string = ''
-  private _taskService = inject(TaskService)
-  private _route = inject(ActivatedRoute)
-
-  constructor() { 
-    
-    
+  constructor() {
+    this.id = this._route.snapshot.paramMap.get('id')!;
+    this.getTask(this.id);
   }
-
-  
-
-  toDoCateogry:any = []
-  tasks : any = []
-  todo:any = []
-  inPro:any =[]
-  done:any =[]
-
-   test1 = {
-    title: 'test 1',
-    description : ' description test 1'
+  trackById(index: number, item: any): string {
+    return item.id || index;  
   }
-  
-  ngOnInit() {
-    
-  }
+  toDoCateogry: any = [];
+  tasks: any = [];
+  todo: any = [];
+  inPro: any = [];
+  done: any = [];
 
+  ngOnInit() {}
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousContainer);
-    
+  async drop(event: CdkDragDrop<string[]>) {
+    console.log(event.container);
+
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      
-      
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
+
+      const updatedTask = {
+        todo: this.todo,
+        inPro: this.inPro,
+        done: this.done, 
+      };
+      
+      await this._taskService.updateTask(this.id, updatedTask);
     }
   }
 
-
-  allCategory(){
-    this._taskService.allCategoryToDoList().subscribe(x => {
-      this.toDoCateogry = x
-      
-      x = this.toDoCateogry.filter((d:any) =>{
-        
-        return d.id === this.id
-      })
-      this.toDoCateogry = x
-      this.todo = this.toDoCateogry[0].todo
-      
-    })  
+ 
+  ngAfterViewInit() {
   }
 
-  ngAfterViewInit(){
-    this.allCategory()
-  }
+  async getTask(id: string) {
+    const snap = await this._taskService.getTask(id);
 
-  async getTask(id:string){
-    const snap = await this._taskService.getTask(id)
-    console.log(snap);
-
-    const task = snap.data() as Task
-    console.log(task.todo);
+    const task = snap.data() as Task;
     
-    if(task){
-      console.log("tiene");
-      
-      
-    }
-
-
-    
+    this.todo = task.todo;
+    this.inPro = task.inPro;
+    this.done = task.done;
+    console.log(task);
     
   }
-
 }

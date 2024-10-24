@@ -13,12 +13,12 @@
           cdkDropList
           #todoList="cdkDropList"
           [cdkDropListData]="todo"
-          [cdkDropListConnectedTo]="[doneList]"
+          [cdkDropListConnectedTo]="[inProList, doneList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-        @for (item of todo; track item) {
-          <div class="example-box" cdkDrag>
+        <div *ngFor=" let item of todo; trackBy: trackById">
+          <div class="example-box" [cdkDragData]="item" cdkDrag>
             <ion-card-header>
               <ion-card-title >s{{ item.title_todo }}</ion-card-title>
             </ion-card-header>
@@ -48,7 +48,8 @@
               </ion-row>
             </ion-card-content>
           </div>
-        }
+        </div>
+        
         </div>
       </div>
     </ion-card>
@@ -59,20 +60,20 @@
         <div class="title-icon">
           
           <ion-title>In Progress</ion-title>
-          <ion-icon name="add-circle-sharp" color="medium" size="large"></ion-icon>
+          <ion-icon style="cursor: pointer;" routerLink="/home/todo/{{id}}/create" name="add-circle-sharp" color="medium" size="large"></ion-icon>
         </div>
         <div
           cdkDropList
-          #doneList="cdkDropList"
+          #inProList="cdkDropList"
           [cdkDropListData]="inPro"
-          [cdkDropListConnectedTo]="[todoList]"
+          [cdkDropListConnectedTo]="[todoList, doneList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-          @for (item of inPro; track item) {
-          <ion-card class="example-box" cdkDrag>
+        <div *ngFor=" let item of inPro; trackBy: trackById">
+          <ion-card class="example-box" [cdkDragData]="item" cdkDrag>
             <ion-card-header>
-              <ion-card-title >{{ item.title }}</ion-card-title>
+              <ion-card-title >{{ item.description_todo }}</ion-card-title>
             </ion-card-header>
   
             <ion-card-content>
@@ -100,7 +101,7 @@
               </ion-row>
             </ion-card-content>
           </ion-card>
-          }
+        </div>
         </div>
       </div>
     </ion-card>
@@ -112,21 +113,21 @@
         <div class="title-icon">
           
           <ion-title>Done</ion-title>
-          <ion-icon name="add-circle-sharp" color="medium" size="large"></ion-icon>
+          <ion-icon  name="add-circle-sharp" color="medium" size="large"></ion-icon>
         </div>
   
         <div
           cdkDropList
           #doneList="cdkDropList"
           [cdkDropListData]="done"
-          [cdkDropListConnectedTo]="[todoList]"
+          [cdkDropListConnectedTo]="[todoList, inProList]"
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-          @for (item of done; track item) {
+        <div *ngFor=" let item of done; trackBy: trackById">
           <ion-card class="example-box" cdkDrag>
             <ion-card-header>
-              <ion-card-title>{{ item.title }}</ion-card-title>
+              <ion-card-title>{{ item.description_done }}</ion-card-title>
             </ion-card-header>
   
             <ion-card-content>
@@ -154,7 +155,7 @@
               </ion-row>
             </ion-card-content>
           </ion-card>
-          }
+        </div>
         </div>
       </div>
     </ion-card>
