@@ -1,0 +1,162 @@
+<h1 >{{id}}</h1>
+<ion-row>
+
+  <ion-col size="4">
+    <ion-card>
+      <div class="example-container">
+        <div class="title-icon">
+  
+          <ion-title>To do</ion-title>
+          <ion-icon style="cursor: pointer;" routerLink="/home/todo/{{id}}/create" name="add-circle-sharp" color="medium" size="large"></ion-icon>
+        </div>
+        <div
+          cdkDropList
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[doneList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+        @for (item of todo; track item) {
+          <div class="example-box" cdkDrag>
+            <ion-card-header>
+              <ion-card-title >s{{ item.title_todo }}</ion-card-title>
+            </ion-card-header>
+  
+            <ion-card-content>
+              <p>{{ item.description_todo }}</p>
+  
+              <ion-row style="width: 100%;">
+                <ion-col size="10">
+                  <p><span>Creazione : </span> 10/20/1994</p>
+                  <p><span>Scadenza : </span> 10/20/1994</p>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-icon
+                    size="small"
+                    color="warning"
+                    name="create-outline"
+                  ></ion-icon>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-icon
+                    name="trash"
+                    color="danger"
+                    size="small"
+                  ></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </div>
+        }
+        </div>
+      </div>
+    </ion-card>
+  </ion-col>
+  <ion-col size="4">
+    <ion-card>
+      <div class="example-container">
+        <div class="title-icon">
+          
+          <ion-title>In Progress</ion-title>
+          <ion-icon name="add-circle-sharp" color="medium" size="large"></ion-icon>
+        </div>
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="inPro"
+          [cdkDropListConnectedTo]="[todoList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of inPro; track item) {
+          <ion-card class="example-box" cdkDrag>
+            <ion-card-header>
+              <ion-card-title >{{ item.title }}</ion-card-title>
+            </ion-card-header>
+  
+            <ion-card-content>
+              <p>Here's a small content. Nothing more, nothi nothing less.</p>
+  
+              <ion-row>
+                <ion-col size="10">
+                  <p><span>Creazione : </span> 10/20/1994</p>
+                  <p><span>Scadenza : </span> 10/20/1994</p>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-icon
+                    size="small"
+                    color="warning"
+                    name="create-outline"
+                  ></ion-icon>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-icon
+                    name="trash"
+                    color="danger"
+                    size="small"
+                  ></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+          }
+        </div>
+      </div>
+    </ion-card>
+  </ion-col>
+  <ion-col size="4">
+    <ion-card>
+      <div class="example-container">
+        
+        <div class="title-icon">
+          
+          <ion-title>Done</ion-title>
+          <ion-icon name="add-circle-sharp" color="medium" size="large"></ion-icon>
+        </div>
+  
+        <div
+          cdkDropList
+          #doneList="cdkDropList"
+          [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="[todoList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of done; track item) {
+          <ion-card class="example-box" cdkDrag>
+            <ion-card-header>
+              <ion-card-title>{{ item.title }}</ion-card-title>
+            </ion-card-header>
+  
+            <ion-card-content>
+              <p>Here's a small content. Nothing more, nothi nothing less.</p>
+  
+              <ion-row>
+                <ion-col size="10">
+                  <p><span>Creazione : </span> 10/20/1994</p>
+                  <p><span>Scadenza : </span> 10/20/1994</p>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-icon
+                    size="small"
+                    color="warning"
+                    name="create-outline"
+                  ></ion-icon>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-icon
+                    name="trash"
+                    color="danger"
+                    size="small"
+                  ></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+          }
+        </div>
+      </div>
+    </ion-card>
+  </ion-col>
+</ion-row>

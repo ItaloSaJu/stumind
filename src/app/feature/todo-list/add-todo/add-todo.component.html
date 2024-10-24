@@ -1,0 +1,47 @@
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="6" size-sm="12">
+        <!-- Formulario de inicio de sesión -->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Aggiungi</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="column">
+                <ion-label>Title</ion-label>
+                <ion-input
+                  formControlName="title_category"
+                  fill="outline"
+                  placeholder="Inserisci la categoria"
+                ></ion-input>
+              </div>
+
+              <!-- Campo de Contraseña -->
+              <!-- <div class="column">
+                <div class="container-recupera">
+                  <ion-label>Password *</ion-label>
+                </div>
+                <ion-input
+                formControlName="password"
+                  type="password"
+                  fill="outline"
+                  placeholder="Inserisci la tua password"
+                ></ion-input>
+
+              </div> -->
+
+              <!-- Botón de Iniciar Sesión -->
+              <ion-button class="accedi" expand="block" type="submit" color="secondary"
+                >ADD</ion-button
+              >
+
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
