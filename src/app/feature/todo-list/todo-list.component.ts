@@ -1,17 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from 'src/app/shared/menu/menu.component';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-  CdkDrag,
-  CdkDropList,
-} from '@angular/cdk/drag-drop';
-import { JsonPipe, NgFor } from '@angular/common';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { NgFor } from '@angular/common';
 import { TaskService } from './task-service/task.service';
 import { RouterLink } from '@angular/router';
+import { catchError, map, of } from 'rxjs';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { AddTodoComponent } from "./modal-create-category/add-todo.component";
+import { ModalController } from '@ionic/angular/standalone';
 
+export interface category_id {
+  id: string;
+  title_category: string;
+}
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
@@ -25,116 +27,48 @@ import { RouterLink } from '@angular/router';
     CdkDrag,
     NgFor,
     RouterLink,
-  ],
+    ReactiveFormsModule,
+    AddTodoComponent
+],
 })
 export class TodoListComponent implements OnInit {
   private _taskService = inject(TaskService);
 
-  constructor() {}
+  category_id: Array<category_id> = [];
 
-  toDoCateogry: any = [];
-  tasks: any = [];
-  todo: any = [];
-  inPro: any = [];
-  done: any = [];
 
-  // todos = [
-  //   {
-  //     category:"casa",
-  //     todo: [
-  //       {
-  //         title:"hola casa",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       },
-  //       {
-  //         title:"hola casa",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       }
-  //     ],
-  //     inPro:[
-  //       {
-  //         title:"hola in pro casa",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       },
-  //       {
-  //         title:"hola in pro in casa",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     category:"universidad",
-  //     todo:[
-  //       {
-  //         title:"hola universidad",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       },
-  //       {
-  //         title:"hola universidad",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       }
-  //     ],
-  //     inPro:[
-  //       {
-  //         title:"hola in pro",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       },
-  //       {
-  //         title:"hola in pro",
-  //         description:"como estas yo estoy muy bien y tu"
-  //       }
-  //     ]
-  //   }
-  // ]
+  constructor(private modalController: ModalController) {
+  }
 
   ngOnInit() {
+    this.getCategoryId()
   }
 
-  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
-  // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousContainer);
-
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+  getCategoryId(){
+    this._taskService
+    .allCategoryToDoList()
+    .pipe(
+      map((categories) => {
+        return categories.map((category) => ({
+          id: category.id,
+          title_category: category['title_category'],
+        }));
+      }),
+      catchError((error) => {
+        console.error('Error al cargar categorías:', error);
+        return of([]); 
+      })
+    )
+    .subscribe(category_id => this.category_id = category_id);
   }
 
- 
-
-  // bottone(title: string) {
-  //   // console.log(this.toDoCateogry);
-  //   // const x = this.toDoCateogry.find((x:any) => x.title_category === title)
-  //   // console.log(x);
-  //   // this.tasks = x
-  //   // this.todo = this.tasks.todo
-  //   // this.inPro = this.tasks.inPro
-  //   // this.done = this.tasks.done
-  //   // console.log(this.todo);
-  //   // console.log(this.inPro);
-  //   // console.log(this.done);
-  // }
-
-  allCategory() {
-    this._taskService.allCategoryToDoList().subscribe((x) => {
-      this.toDoCateogry = x;
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: AddTodoComponent, // Tu componente del modal
+      
     });
+    return await modal.present();
   }
 
-  ngAfterViewInit() {
-    this.allCategory();
-  }
 }
+

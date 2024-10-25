@@ -7,10 +7,10 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { TodoListComponent } from './feature/todo-list/todo-list.component';
 import { ListDashboardComponent } from './feature/home/list-dashboard/list-dashboard.component';
 import { MeteoComponent } from './feature/meteo/meteo.component';
-import { AddTodoComponent } from './feature/todo-list/add-todo/add-todo.component';
+import { AddTodoComponent } from './feature/todo-list/modal-create-category/add-todo.component';
 import { UpdateTodoComponent } from './feature/todo-list/update-todo/update-todo.component';
 import { TodoTaskComponent } from './feature/todo-list/todo-task/todo-task.component';
-import { CreateTaskComponent } from './feature/todo-list/todo-task/create-task/create-task.component';
+import { CreateTaskComponent } from './feature/todo-list/todo-task/modal-create-task/create-task.component';
 
 export const routes: Routes = [
   {
@@ -38,10 +38,6 @@ export const routes: Routes = [
           {
             path: ':id',
             component: TodoTaskComponent,
-          },
-          {
-            path: ':id/create',
-            component: CreateTaskComponent,
           },
         ],
       },

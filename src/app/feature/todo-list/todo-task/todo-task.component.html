@@ -1,4 +1,3 @@
-<h1 >{{id}}</h1>
 <ion-row>
 
   <ion-col size="4">
@@ -7,7 +6,7 @@
         <div class="title-icon">
   
           <ion-title>To do</ion-title>
-          <ion-icon style="cursor: pointer;" routerLink="/home/todo/{{id}}/create" name="add-circle-sharp" color="medium" size="large"></ion-icon>
+          <ion-icon (click)="openModal()" style="cursor: pointer;"  name="add-circle-sharp" color="medium" size="large"></ion-icon>
         </div>
         <div
           cdkDropList

@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -10,9 +10,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TaskService } from '../../task-service/task.service';
 import { Task } from '../../task-service/task.service';
+import { ModalController } from '@ionic/angular/standalone';
 
 export interface FormLogin {
-  title_category: FormControl<string | null>;
   title_todo: FormControl<string | null>;
   description_todo: FormControl<string | null>;
 }
@@ -31,53 +31,46 @@ export class CreateTaskComponent implements OnInit {
   private route = inject(Router);
   private router = inject(ActivatedRoute);
 
-
   id: string = ''
-  data?: Task
+  data ?:Task
 
-  constructor() {
-    this.id = this.router.snapshot.paramMap.get('id')!
-    this.getTask(this.id)
+  constructor(private modalController: ModalController) {
   }
 
-  async ngOnInit() {
+   ngOnInit() {
+    
     
   }
 
   form = this._fb.group<FormLogin>({
-    title_category: this._fb.control('', [Validators.required]),
     title_todo: this._fb.control('', [Validators.required]),
     description_todo: this._fb.control('', [Validators.required]),
   });
 
-
-
-  async getTask(id:string){
-    const snap = await this._taskService.getTask(id)
-
-    const task = snap.data() as Task
-    this.data = task
-    
-    
-  }
-
+  
+ 
   async submit() {
     if (this.form.invalid) return;
 
-      try {
-        const { title_category, title_todo, description_todo } = this.form.value;
-    
-        if (this.data) {
+    try {
+      const {  title_todo, description_todo } = this.form.value;
+      
+      if (this.data) {
+          console.log(this.data.todo);
+          
           this.data.todo = this.data.todo || [];
           this.data.todo.push({
             title_todo: title_todo || '',
             description_todo: description_todo || '',
           });
-    
+          console.log(this.data);
+          
           await this._taskService.updateTask(this.id, this.data);
+          this.form.reset()
+           this._taskService.sendTask(this.data);
+           this.modalController.dismiss()
         } else {
           const newTask = {
-            title_category: title_category || '',
             todo: [
               {
                 title_todo: title_todo || '',
@@ -89,10 +82,10 @@ export class CreateTaskComponent implements OnInit {
           };
     
           await this._taskService.create(newTask);
+          this.form.reset()
           console.log('Nueva tarea creada');
         }
     
-        this.route.navigateByUrl('/home/todo');
       } catch (error) {
         console.log(error);
       }

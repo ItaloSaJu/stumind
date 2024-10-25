@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { TaskService } from '../task-service/task.service';
 import {
   CdkDrag,
@@ -12,6 +12,8 @@ import { IonicModule } from '@ionic/angular';
 import { NgFor } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Task } from '../task-service/task.service';
+import { CreateTaskComponent } from "./modal-create-task/create-task.component";
+import { ModalController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-todo-task',
@@ -25,30 +27,38 @@ import { Task } from '../task-service/task.service';
     CdkDrag,
     NgFor,
     RouterLink,
-  ],
+    CreateTaskComponent
+],
 })
 export class TodoTaskComponent implements OnInit {
-  id: string = '';
+  id :string = ''
+  
   private _taskService = inject(TaskService);
   private _route = inject(ActivatedRoute);
 
-  constructor() {
+  constructor(private modalController: ModalController) {
     this.id = this._route.snapshot.paramMap.get('id')!;
     this.getTask(this.id);
   }
   trackById(index: number, item: any): string {
     return item.id || index;  
   }
-  toDoCateogry: any = [];
-  tasks: any = [];
+  tasks:any = [];
   todo: any = [];
   inPro: any = [];
   done: any = [];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._taskService.taskObservable$.subscribe((task) => {
+      this.tasks = task;
+      this.todo = this.tasks.todo;
+      this.inPro = this.tasks.inPro;
+      this.done = this.tasks.done;
+    });
+    
+  }
 
   async drop(event: CdkDragDrop<string[]>) {
-    console.log(event.container);
 
     if (event.previousContainer === event.container) {
       moveItemInArray(
@@ -73,6 +83,7 @@ export class TodoTaskComponent implements OnInit {
       await this._taskService.updateTask(this.id, updatedTask);
     }
   }
+ 
 
  
   ngAfterViewInit() {
@@ -80,13 +91,23 @@ export class TodoTaskComponent implements OnInit {
 
   async getTask(id: string) {
     const snap = await this._taskService.getTask(id);
-
     const task = snap.data() as Task;
-    
     this.todo = task.todo;
     this.inPro = task.inPro;
     this.done = task.done;
-    console.log(task);
+    this._taskService.sendTask(task)
     
+    
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: CreateTaskComponent, // Tu componente del modal
+      componentProps: { 
+        data: this.tasks,
+        id: this.id
+      }
+    });
+    return await modal.present();
   }
 }

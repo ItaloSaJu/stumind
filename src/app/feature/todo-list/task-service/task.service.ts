@@ -8,7 +8,7 @@ import {
   getDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 
 export interface todo {
@@ -25,7 +25,7 @@ export interface done {
 }
 export interface Task {
   id?: string;
-  title_category: string;
+  title_category?: string;
   todo?: todo[];
   inPro?:inPro[];
   done?: done[];
@@ -37,8 +37,14 @@ const PATH = 'tasks';
   providedIn: 'root',
 })
 export class TaskService {
-  private _firestore = inject(Firestore);
 
+  private taskSubject = new Subject<Task>();
+  taskObservable$ = this.taskSubject.asObservable();
+  private idSubject = new Subject<string>();
+  idObservable$ = this.idSubject.asObservable();
+
+
+  private _firestore = inject(Firestore);
   private _collection = collection(this._firestore, PATH);
 
 
@@ -53,6 +59,7 @@ export class TaskService {
 
   getTask(id:string){
     const docRef = doc(this._collection, id)
+    
     return getDoc(docRef)
     
   }
@@ -61,4 +68,12 @@ export class TaskService {
     const taskDocRef = doc(this._firestore, `${PATH}/${taskId}`);
     return updateDoc(taskDocRef, updatedTask);
   }
+
+
+  sendTask(task: Task) {
+    
+    this.taskSubject.next(task);
+  }
+
+
 }

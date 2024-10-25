@@ -1,0 +1,35 @@
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col
+        size-md="12"
+        size-sm="12"
+        style="display: flex; gap: 30px; flex-direction: column"
+      >
+        <!-- Formulario de inicio de sesión -->
+        <ion-card-header>
+          <ion-card-title>Aggiungi</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="column">
+              <ion-label>Title</ion-label>
+              <ion-input
+                formControlName="title_category"
+                fill="outline"
+                placeholder="Inserisci la categoria"
+              ></ion-input>
+            </div>
+
+            <ion-button
+              class="add"
+              expand=""
+              type="submit"
+              color="secondary"
+              >Aggiungi</ion-button
+            >
+          </form>
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+

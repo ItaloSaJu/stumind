@@ -1,15 +1,17 @@
-<ion-grid>
+<ion-grid style="width: 95%;">
   <ion-row>
     <ion-col size="12" class="namme-button-add">
         <ion-title> TODO List </ion-title>
-        <ion-button color="success" fill="outline" routerLink="/home/add-todo">+ Aggiungi</ion-button>
+        <ion-button (click)="openModal()" id="open-custom-dialog" color="success" fill="outline">+ Aggiungi</ion-button>
     </ion-col>
     <ion-col size="12" class="border-bottom-category" >
-      <ion-button fill="outline"  *ngFor="let item of toDoCateogry" routerLink="/home/todo/{{item.id}}" >{{item.title_category}}</ion-button>
-      <!-- <ion-button fill="outline"  >universidad</ion-button> -->
+      <ion-button fill="outline"  routerDirection="root" *ngFor="let item of category_id" routerLink="/home/todo/{{item.id}}" >{{item.title_category}}</ion-button>
     </ion-col >
     <ion-col size="12">
       <ion-router-outlet style="width: 100%; height: 50vh;"></ion-router-outlet>
     </ion-col>
   </ion-row>
 </ion-grid>
+
+
+
