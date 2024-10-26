@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, input, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,8 @@ import { IonicModule } from '@ionic/angular';
 import { TaskService } from '../../task-service/task.service';
 import { Task } from '../../task-service/task.service';
 import { ModalController } from '@ionic/angular/standalone';
+import { Subscription } from 'rxjs';
+import { category_id } from '../../todo-list.component';
 
 export interface FormLogin {
   title_todo: FormControl<string | null>;
@@ -25,20 +27,18 @@ export interface FormLogin {
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule, NgIf, RouterLink],
 })
-export class CreateTaskComponent implements OnInit {
+export class CreateTaskComponent implements OnInit,  OnDestroy  {
   private _fb = inject(FormBuilder);
   private _taskService = inject(TaskService);
   private route = inject(Router);
-  private router = inject(ActivatedRoute);
+  private modalController = inject(ModalController);
+  private taskSubscription?: Subscription; 
+
 
   id: string = ''
   data ?:Task
 
-  constructor(private modalController: ModalController) {
-  }
-
    ngOnInit() {
-    
     
   }
 
@@ -50,45 +50,40 @@ export class CreateTaskComponent implements OnInit {
   
  
   async submit() {
+    
     if (this.form.invalid) return;
 
     try {
       const {  title_todo, description_todo } = this.form.value;
       
       if (this.data) {
-          console.log(this.data.todo);
           
           this.data.todo = this.data.todo || [];
           this.data.todo.push({
             title_todo: title_todo || '',
             description_todo: description_todo || '',
           });
-          console.log(this.data);
           
           await this._taskService.updateTask(this.id, this.data);
           this.form.reset()
            this._taskService.sendTask(this.data);
            this.modalController.dismiss()
-        } else {
-          const newTask = {
-            todo: [
-              {
-                title_todo: title_todo || '',
-                description_todo: description_todo || '',
-              },
-            ],
-            inPro: [],
-            done: [],
-          };
-    
-          await this._taskService.create(newTask);
-          this.form.reset()
-          console.log('Nueva tarea creada');
-        }
+        } 
     
       } catch (error) {
         console.log(error);
       }
     
   }
+
+  ngOnDestroy(): void {
+    if(this.taskSubscription){
+      console.log("adios");
+      this.taskSubscription.unsubscribe();
+      
+    }
+  }
+  
+
+  
 }

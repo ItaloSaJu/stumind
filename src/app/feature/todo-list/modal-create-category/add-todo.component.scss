@@ -28,3 +28,13 @@ ion-modal#example-modal .wrapper {
 .add {
   margin-top: 20px;
 }
+
+ion-item{
+  
+  --background: transparent !important;
+  :part[native]{
+    
+    padding:0 !important;
+  }
+}
+

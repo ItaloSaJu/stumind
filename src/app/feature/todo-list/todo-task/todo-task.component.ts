@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TaskService } from '../task-service/task.service';
 import {
   CdkDrag,
@@ -14,6 +14,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Task } from '../task-service/task.service';
 import { CreateTaskComponent } from "./modal-create-task/create-task.component";
 import { ModalController } from '@ionic/angular/standalone';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-task',
@@ -30,16 +31,18 @@ import { ModalController } from '@ionic/angular/standalone';
     CreateTaskComponent
 ],
 })
-export class TodoTaskComponent implements OnInit {
+export class TodoTaskComponent implements OnInit,  OnDestroy {
   id :string = ''
   
   private _taskService = inject(TaskService);
   private _route = inject(ActivatedRoute);
+  private taskSubscription?: Subscription; 
 
   constructor(private modalController: ModalController) {
     this.id = this._route.snapshot.paramMap.get('id')!;
     this.getTask(this.id);
   }
+  
   trackById(index: number, item: any): string {
     return item.id || index;  
   }
@@ -49,11 +52,11 @@ export class TodoTaskComponent implements OnInit {
   done: any = [];
 
   ngOnInit() {
-    this._taskService.taskObservable$.subscribe((task) => {
-      this.tasks = task;
-      this.todo = this.tasks.todo;
-      this.inPro = this.tasks.inPro;
-      this.done = this.tasks.done;
+    this.taskSubscription = this._taskService.taskObservable$.subscribe((task) => {
+      this.tasks = task
+      this.todo = task.todo;
+      this.inPro =task.inPro;
+      this.done = task.done;
     });
     
   }
@@ -101,6 +104,7 @@ export class TodoTaskComponent implements OnInit {
   }
 
   async openModal() {
+    
     const modal = await this.modalController.create({
       component: CreateTaskComponent, // Tu componente del modal
       componentProps: { 
@@ -109,5 +113,13 @@ export class TodoTaskComponent implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  
+  ngOnDestroy(): void {
+    if(this.taskSubscription){
+      this.taskSubscription.unsubscribe();
+      
+    }
   }
 }

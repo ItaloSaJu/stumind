@@ -3,6 +3,7 @@ import {
   addDoc,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   Firestore,
   getDoc,
@@ -40,8 +41,6 @@ export class TaskService {
 
   private taskSubject = new Subject<Task>();
   taskObservable$ = this.taskSubject.asObservable();
-  private idSubject = new Subject<string>();
-  idObservable$ = this.idSubject.asObservable();
 
 
   private _firestore = inject(Firestore);
@@ -69,9 +68,14 @@ export class TaskService {
     return updateDoc(taskDocRef, updatedTask);
   }
 
+  
+  deleteTask(taskId: string) {
+    const taskDocRef = doc(this._firestore, `${PATH}/${taskId}`);
+    return deleteDoc(taskDocRef);
+  }
+
 
   sendTask(task: Task) {
-    
     this.taskSubject.next(task);
   }
 
