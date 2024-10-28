@@ -12,24 +12,30 @@ import {
 import { Observable, Subject } from 'rxjs';
 
 
-export interface todo {
+export interface Todo {
+  category?: string
+  idTask: string,
   title_todo: string;
   description_todo: string;
 }
-export interface inPro {
-  title: string;
-  description: string;
+export interface InPro {
+  category?: string
+  idTask: string,
+  title_todo: string;
+  description_todo: string;
 }
-export interface done {
-  title: string;
-  description: string;
+export interface Done {
+  category?: string
+  idTask: string,
+  title_todo: string;
+  description_todo: string;
 }
 export interface Task {
   id?: string;
   title_category?: string;
-  todo?: todo[];
-  inPro?:inPro[];
-  done?: done[];
+  todo?: Todo[];
+  inPro?:InPro[];
+  done?: Done[];
 }
 
 const PATH = 'tasks';
@@ -58,7 +64,6 @@ export class TaskService {
 
   getTask(id:string){
     const docRef = doc(this._collection, id)
-    
     return getDoc(docRef)
     
   }
@@ -77,6 +82,10 @@ export class TaskService {
 
   sendTask(task: Task) {
     this.taskSubject.next(task);
+  }
+
+  createTaskId(): string {
+    return Date.now().toString();
   }
 
 

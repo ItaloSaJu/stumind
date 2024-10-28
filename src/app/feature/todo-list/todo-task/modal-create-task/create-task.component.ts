@@ -1,5 +1,15 @@
 import { NgIf } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,7 +18,12 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TaskService } from '../../task-service/task.service';
+import {
+  Done,
+  InPro,
+  TaskService,
+  Todo,
+} from '../../task-service/task.service';
 import { Task } from '../../task-service/task.service';
 import { ModalController } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
@@ -27,19 +42,25 @@ export interface FormLogin {
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule, NgIf, RouterLink],
 })
-export class CreateTaskComponent implements OnInit,  OnDestroy  {
+export class CreateTaskComponent implements OnInit, OnDestroy {
   private _fb = inject(FormBuilder);
   private _taskService = inject(TaskService);
   private route = inject(Router);
   private modalController = inject(ModalController);
-  private taskSubscription?: Subscription; 
+  private taskSubscription?: Subscription;
 
+  id: string = '';
+  data!: Task;
+  itemTask: any;
+  dataTodo: Todo[] = [];
+  dataInPro: InPro[] = [];
+  dataDone: Done[] = [];
 
-  id: string = ''
-  data ?:Task
-
-   ngOnInit() {
-    
+  ngOnInit() {
+    this.form.patchValue({
+      title_todo: this.itemTask.title_todo,
+      description_todo: this.itemTask?.description_todo,
+    });
   }
 
   form = this._fb.group<FormLogin>({
@@ -47,43 +68,43 @@ export class CreateTaskComponent implements OnInit,  OnDestroy  {
     description_todo: this._fb.control('', [Validators.required]),
   });
 
-  
- 
   async submit() {
-    
     if (this.form.invalid) return;
 
     try {
-      const {  title_todo, description_todo } = this.form.value;
-      
-      if (this.data) {
-          
-          this.data.todo = this.data.todo || [];
-          this.data.todo.push({
-            title_todo: title_todo || '',
-            description_todo: description_todo || '',
-          });
-          
-          await this._taskService.updateTask(this.id, this.data);
-          this.form.reset()
-           this._taskService.sendTask(this.data);
-           this.modalController.dismiss()
-        } 
-    
-      } catch (error) {
-        console.log(error);
+      const { title_todo, description_todo } = this.form.value;
+
+      if (this.itemTask) {
+
+        this.itemTask.title_todo = title_todo;
+        this.itemTask.description_todo = description_todo;
+
+      } else if (this.data) {
+
+        const itemTask = this._taskService.createTaskId();
+        this.data.todo = this.data.todo || [];
+        this.data.todo.push({
+          category: 'todo',
+          idTask: itemTask,
+          title_todo: title_todo || '',
+          description_todo: description_todo || '',
+        });
+
       }
-    
+      await this._taskService.updateTask(this.id, this.data);
+      // this._taskService.sendTask(this.data);
+      this.form.reset();
+      this.modalController.dismiss();
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   ngOnDestroy(): void {
-    if(this.taskSubscription){
-      console.log("adios");
+    if (this.taskSubscription) {
+      console.log('adios');
       this.taskSubscription.unsubscribe();
-      
     }
   }
-  
-
-  
 }

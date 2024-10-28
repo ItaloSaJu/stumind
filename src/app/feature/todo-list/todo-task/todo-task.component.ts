@@ -1,5 +1,13 @@
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TaskService } from '../task-service/task.service';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Done, InPro, TaskService, Todo } from '../task-service/task.service';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -12,7 +20,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgFor } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Task } from '../task-service/task.service';
-import { CreateTaskComponent } from "./modal-create-task/create-task.component";
+import { CreateTaskComponent } from './modal-create-task/create-task.component';
 import { ModalController } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
 
@@ -28,41 +36,41 @@ import { Subscription } from 'rxjs';
     CdkDrag,
     NgFor,
     RouterLink,
-    CreateTaskComponent
-],
+    CreateTaskComponent,
+  ],
 })
-export class TodoTaskComponent implements OnInit,  OnDestroy {
-  id :string = ''
-  
+export class TodoTaskComponent implements OnInit, OnDestroy {
+  id: string = '';
+
   private _taskService = inject(TaskService);
   private _route = inject(ActivatedRoute);
-  private taskSubscription?: Subscription; 
+  private taskSubscription?: Subscription;
 
   constructor(private modalController: ModalController) {
     this.id = this._route.snapshot.paramMap.get('id')!;
     this.getTask(this.id);
   }
-  
+
   trackById(index: number, item: any): string {
-    return item.id || index;  
+    return item.id || index;
   }
-  tasks:any = [];
-  todo: any = [];
-  inPro: any = [];
-  done: any = [];
+  tasks: any = [];
+  todo: Todo[] = [];
+  inPro: InPro[] = [];
+  done: Done[] = [];
 
   ngOnInit() {
-    this.taskSubscription = this._taskService.taskObservable$.subscribe((task) => {
-      this.tasks = task
-      this.todo = task.todo;
-      this.inPro =task.inPro;
-      this.done = task.done;
-    });
-    
+    this.taskSubscription = this._taskService.taskObservable$.subscribe(
+      (task) => {
+        this.tasks = task;
+        this.todo = task.todo || [];
+        this.inPro = task.inPro || [];
+        this.done = task.done || [];
+      }
+    );
   }
 
-  async drop(event: CdkDragDrop<string[]>) {
-
+  async drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -70,6 +78,17 @@ export class TodoTaskComponent implements OnInit,  OnDestroy {
         event.currentIndex
       );
     } else {
+      const item = event.previousContainer.data[event.previousIndex];
+
+      // Actualizar la propiedad "category" según la lista de destino
+      if (event.container.id === 'arrayInPro') {
+        item.category = 'inPro';
+      } else if (event.container.id === 'arrayDone') {
+        item.category = 'done';
+      } else if (event.container.id === 'arrayTodo') {
+        item.category = 'todo';
+      }
+
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -80,46 +99,59 @@ export class TodoTaskComponent implements OnInit,  OnDestroy {
       const updatedTask = {
         todo: this.todo,
         inPro: this.inPro,
-        done: this.done, 
+        done: this.done,
       };
-      
+
       await this._taskService.updateTask(this.id, updatedTask);
+      
     }
   }
- 
 
- 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   async getTask(id: string) {
     const snap = await this._taskService.getTask(id);
     const task = snap.data() as Task;
-    this.todo = task.todo;
-    this.inPro = task.inPro;
-    this.done = task.done;
-    this._taskService.sendTask(task)
-    
-    
+
+    this.todo = task.todo || [];
+    this.inPro = task.inPro || [];
+    this.done = task.done || [];
+    this._taskService.sendTask(task);
   }
 
-  async openModal() {
+  async openModal(item:any) {
     
     const modal = await this.modalController.create({
       component: CreateTaskComponent, // Tu componente del modal
-      componentProps: { 
+      componentProps: {
+        dataTodo: this.tasks.todo,
+        dataInPro: this.tasks.inPro,
+        dataDone: this.tasks.done,
         data: this.tasks,
-        id: this.id
-      }
+        id: this.id,
+        itemTask:item
+      },
     });
     return await modal.present();
   }
 
-  
-  ngOnDestroy(): void {
-    if(this.taskSubscription){
-      this.taskSubscription.unsubscribe();
+
+  deleteTask(idTask: any) {
+
+    if(idTask.category){
       
+      this.tasks[idTask.category] = this.tasks[idTask.category].filter((task:any) =>{
+        return task.idTask !== idTask.idTask
+      })
+    }
+
+    this._taskService.updateTask(this.id, this.tasks);
+    this._taskService.sendTask(this.tasks);
+  }
+
+  ngOnDestroy(): void {
+    if (this.taskSubscription) {
+      this.taskSubscription.unsubscribe();
     }
   }
 }
