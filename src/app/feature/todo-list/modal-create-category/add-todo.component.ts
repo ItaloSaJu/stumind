@@ -34,10 +34,14 @@ export class AddTodoComponent implements OnInit {
   categoryId: category_id[] = [];
   id: string = '';
   title_category: string = '';
+  // categoryDBButton?:string
+  // idCategory:string = ''
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   form = this._fb.group<FormLogin>({
     title_category: this._fb.control(null, [Validators.required]),

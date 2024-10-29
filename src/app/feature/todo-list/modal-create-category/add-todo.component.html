@@ -1,35 +1,48 @@
-<ion-row class="ion-justify-content-center">
-  <ion-col
-    size-md="12"
-    size-sm="12"
-    style="display: flex; gap: 30px; flex-direction: column"
-  >
-    <!-- Formulario de inicio de sesión -->
-    <ion-card-header>
-      <ion-card-title>Aggiungi</ion-card-title>
-    </ion-card-header>
+<ion-grid>
+  <ion-row class="ion-justify-content-center">
+    <ion-col
+      size-md="12"
+      size-sm="12"
+      style="display: flex; gap: 30px; flex-direction: column"
+    >
+      <!-- Formulario de inicio de sesión -->
+      <ion-card-header>
+        <ion-card-title>Aggiungi categoria</ion-card-title>
+      </ion-card-header>
 
-    <ion-card-content>
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="column">
-          <ion-label>Title</ion-label>
-          <ion-input
-            formControlName="title_category"
-            fill="outline"
-            placeholder="Inserisci la categoria"
-          ></ion-input>
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="column">
+            <ion-label>Titulo</ion-label>
+            <ion-input
+              formControlName="title_category"
+              fill="outline"
+              placeholder="Inserisci la categoria"
+            ></ion-input>
+          </div>
+
+          <ion-button class="add" expand="" type="submit" color="secondary"
+            >Aggiungi</ion-button
+          >
+        </form>
+        <div class="box-items-category" >
+          <ion-item class="" *ngFor="let item of categoryId">
+            <ion-label>{{ item.title_category }}</ion-label>
+            <ion-icon
+              (click)="update(item.id)"
+              color="warning"
+              name="create-outline"
+              slot="end"
+            ></ion-icon>
+            <ion-icon
+              (click)="delete(item.id)"
+              name="trash"
+              color="danger"
+              slot="end"
+            ></ion-icon>
+          </ion-item>
         </div>
-
-        <ion-button class="add" expand="" type="submit" color="secondary"
-          >Aggiungi</ion-button
-        >
-      </form>
-
-      <ion-item *ngFor="let item of categoryId">
-        <ion-label>{{ item.title_category }}</ion-label>
-        <ion-icon (click)="update(item.id)" color="warning" name="create-outline" slot="end"></ion-icon>
-        <ion-icon (click)="delete(item.id)"  name="trash" color="danger" slot="end"></ion-icon>
-      </ion-item>
-    </ion-card-content>
-  </ion-col>
-</ion-row>
+      </ion-card-content>
+    </ion-col>
+  </ion-row>
+</ion-grid>

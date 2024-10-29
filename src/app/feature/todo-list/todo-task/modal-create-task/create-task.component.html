@@ -1,38 +1,40 @@
-   
-        <ion-row class="ion-justify-content-center">
-          <ion-col size-sm="12">
-            <!-- Formulario de inicio de sesión -->
-              <ion-card-header>
-                <ion-card-title>Aggiungi Task</ion-card-title>
-              </ion-card-header>
+<ion-grid>
+  
+  <ion-row class="ion-justify-content-center">
+    <ion-col size-sm="12">
+      <!-- Formulario de inicio de sesión -->
+        <ion-card-header>
+          <ion-card-title>Aggiungi Task</ion-card-title>
+        </ion-card-header>
 
-              <ion-card-content>
-                <form [formGroup]="form" (ngSubmit)="submit()">
-                  <div class="column">
-                    <ion-label>Title todo</ion-label>
-                    <ion-input
-                      formControlName="title_todo"
-                      fill="outline"
-                      placeholder="Inserisci la categoria"
-                    ></ion-input>
-                  </div>
-                  <div class="column">
-                    <ion-label>description Title</ion-label>
-                    <ion-input
-                      formControlName="description_todo"
-                      fill="outline"
-                      placeholder="Inserisci la categoria"
-                    ></ion-input>
-                  </div>
+        <ion-card-content>
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="column">
+              <ion-label>Title todo</ion-label>
+              <ion-input
+                formControlName="title_todo"
+                fill="outline"
+                placeholder="Inserisci la categoria"
+              ></ion-input>
+            </div>
+            <div class="column">
+              <ion-label>description Title</ion-label>
+              <ion-input
+                formControlName="description_todo"
+                fill="outline"
+                placeholder="Inserisci la categoria"
+              ></ion-input>
+            </div>
 
-                  <ion-button
-                    class="accedi"
-                    type="submit"
-                    color="secondary"
-                    >AGGIUNGI</ion-button
-                  >
-                </form>
-              </ion-card-content>
-          </ion-col>
-        </ion-row>
+            <ion-button
+              class="accedi"
+              type="submit"
+              color="secondary"
+              >AGGIUNGI</ion-button
+            >
+          </form>
+        </ion-card-content>
+    </ion-col>
+  </ion-row>
+</ion-grid>   
      

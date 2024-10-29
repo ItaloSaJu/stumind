@@ -38,11 +38,13 @@ export class TodoListComponent implements OnInit {
 
   category_id: Array<category_id> = [];
   currentTaskId: string = '';
+  title_category: string ='TodoList'
   
 
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {
+    this.title_category
     if(this.category_id.length > 0){
       
       this.currentTaskId= this.category_id[0].id
@@ -67,6 +69,8 @@ export class TodoListComponent implements OnInit {
         })
       )
       .subscribe((category_id) => {
+        // console.log(category_id); // TODO : revisar porque salen muchos estampados
+        
         this.category_id = category_id;
 
         
@@ -85,9 +89,22 @@ export class TodoListComponent implements OnInit {
     return await modal.present();
   }
 
+  // async openModalDB(item:category_id) {
+  //   console.log(item);
+    
+  //   const modal = await this.modalController.create({
+  //     component: AddTodoComponent,
+  //     componentProps: { 
+  //       categoryDBButton: item.title_category,
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
+
  
 
-  idButton(id: string) {
+  idButton(id: string, title_category:string) {
     this.currentTaskId = id;
+    this.title_category = title_category
   }
 }

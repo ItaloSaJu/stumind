@@ -1,3 +1,24 @@
+ion-grid{
+  width: 90%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  ion-row{
+    width: 100%;
+  }
+  .box-items-category{
+    max-height: 320px;
+    overflow-y:scroll;
+  }
+
+  ion-card-content{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
 ion-modal#example-modal {
     --width: fit-content;
     --min-width: 30%;
