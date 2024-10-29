@@ -1,12 +1,20 @@
 <ion-row>
-
   <ion-col size="4">
     <ion-card>
       <div class="example-container">
         <div class="title-icon">
-  
-          <ion-title>To do</ion-title>
-          <ion-icon (click)="openModal('')" style="cursor: pointer;"  name="add-circle-sharp" color="medium" size="large"></ion-icon>
+          <div class="container-title-badge">
+
+            <ion-title>To do </ion-title>
+            <ion-badge color="warning">{{todo.length}}</ion-badge>
+          </div>
+          <ion-icon
+            (click)="openModal('')"
+            style="cursor: pointer"
+            name="add-circle-sharp"
+            color="medium"
+            size="large"
+          ></ion-icon>
         </div>
         <div
           id="arrayTodo"
@@ -17,41 +25,43 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-        <div *ngFor=" let item of todo; trackBy: trackById">
-          <div class="example-box" [cdkDragData]="item" cdkDrag>
-            <ion-card-header>
-              <ion-card-title >{{ item.title_todo }}</ion-card-title>
-            </ion-card-header>
-  
-            <ion-card-content>
-              <p>{{ item.description_todo }}</p>
-  
-              <ion-row style="width: 100%;">
-                <ion-col size="10">
-                  <p><span>Creazione : </span> 10/20/1994</p>
-                  <p><span>Scadenza : </span> 10/20/1994</p>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                  (click)="openModal(item)"
-                  size="small"
-                  color="warning"
-                  name="create-outline"
-                  ></ion-icon>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                  (click)="deleteTask(item)"
-                    name="trash"
-                    color="danger"
-                    size="small"
-                  ></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-card-content>
+          <div  *ngFor="let item of todo; trackBy: trackById">
+
+            <ion-car class="example-box" [cdkDragData]="item" cdkDrag>
+              <ion-card-header>
+                <ion-card-title>{{ item.title_todo }}</ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-row>
+                  <p>{{ item.description_todo }}</p>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="10">
+                    <p><span>Creazione : </span> 10/20/1994</p>
+                    <p><span>Scadenza : </span> 10/20/1994</p>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-icon
+                      (click)="openModal(item)"
+                      size="small"
+                      color="warning"
+                      name="create-outline"
+                    ></ion-icon>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-icon
+                      (click)="deleteTask(item)"
+                      name="trash"
+                      color="danger"
+                      size="small"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-car>
           </div>
-        </div>
-        
         </div>
       </div>
     </ion-card>
@@ -60,13 +70,21 @@
     <ion-card>
       <div class="example-container">
         <div class="title-icon">
-          
-          <ion-title>In Progress</ion-title>
-          <ion-icon style="cursor: pointer;" routerLink="/home/todo/{{id}}/create" name="add-circle-sharp" color="medium" size="large"></ion-icon>
+          <div class="container-title-badge">
+            
+            <ion-title>In Progress</ion-title>
+            <ion-badge color="danger">{{inPro.length}}</ion-badge>
+          </div>
+          <ion-icon
+            style="cursor: pointer"
+            routerLink="/home/todo/{{ id }}/create"
+            name="add-circle-sharp"
+            color="medium"
+            size="large"
+          ></ion-icon>
         </div>
         <div
-        id="arrayInPro"
-
+          id="arrayInPro"
           cdkDropList
           #inProList="cdkDropList"
           [cdkDropListData]="inPro"
@@ -74,41 +92,42 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-        <div *ngFor=" let item of inPro; trackBy: trackById">
-          <ion-card class="example-box" [cdkDragData]="item" cdkDrag>
-            <ion-card-header>
-              <ion-card-title >{{ item.title_todo }}</ion-card-title>
-            </ion-card-header>
-  
-            <ion-card-content>
-              <p>Here's a small content. Nothing more, nothi nothing less.</p>
-  
-              <ion-row>
-                <ion-col size="10">
-                  <p><span>Creazione : </span> 10/20/1994</p>
-                  <p><span>Scadenza : </span> 10/20/1994</p>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                  (click)="openModal(item)"
-                    size="small"
-                    color="warning"
-                    name="create-outline"
-                  ></ion-icon>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                  (click)="deleteTask(item)"
+          <div *ngFor="let item of inPro; trackBy: trackById">
+            <ion-card class="example-box" [cdkDragData]="item" cdkDrag>
+              <ion-card-header>
+                <ion-card-title>{{ item.title_todo }}</ion-card-title>
+              </ion-card-header>
 
-                    name="trash"
-                    color="danger"
-                    size="small"
-                  ></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-card-content>
-          </ion-card>
-        </div>
+              <ion-card-content>
+                <ion-row>
+                  <p>{{ item.description_todo }}</p>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="10">
+                    <p><span>Creazione : </span> 10/20/1994</p>
+                    <p><span>Scadenza : </span> 10/20/1994</p>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-icon
+                      (click)="openModal(item)"
+                      size="small"
+                      color="warning"
+                      name="create-outline"
+                    ></ion-icon>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-icon
+                      (click)="deleteTask(item)"
+                      name="trash"
+                      color="danger"
+                      size="small"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </div>
         </div>
       </div>
     </ion-card>
@@ -116,16 +135,21 @@
   <ion-col size="4">
     <ion-card>
       <div class="example-container">
-        
         <div class="title-icon">
-          
-          <ion-title>Done</ion-title>
-          <ion-icon  name="add-circle-sharp" color="medium" size="large"></ion-icon>
+          <div class="container-title-badge">
+            
+            <ion-title>Done</ion-title>
+            <ion-badge color="success">{{done.length}}</ion-badge>
+          </div>
+          <ion-icon
+            name="add-circle-sharp"
+            color="medium"
+            size="large"
+          ></ion-icon>
         </div>
-  
-        <div
-        id="arrayDone"
 
+        <div
+          id="arrayDone"
           cdkDropList
           #doneList="cdkDropList"
           [cdkDropListData]="done"
@@ -133,40 +157,42 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-        <div *ngFor=" let item of done; trackBy: trackById">
-          <ion-card class="example-box" cdkDrag>
-            <ion-card-header>
-              <ion-card-title>{{ item.title_todo }}</ion-card-title>
-            </ion-card-header>
-  
-            <ion-card-content>
-              <p>Here's a small content. Nothing more, nothi nothing less.</p>
-  
-              <ion-row>
-                <ion-col size="10">
-                  <p><span>Creazione : </span> 10/20/1994</p>
-                  <p><span>Scadenza : </span> 10/20/1994</p>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                  (click)="openModal(item)"
-                    size="small"
-                    color="warning"
-                    name="create-outline"
-                  ></ion-icon>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-icon
-                  (click)="deleteTask(item)"
-                    name="trash"
-                    color="danger"
-                    size="small"
-                  ></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-card-content>
-          </ion-card>
-        </div>
+          <div *ngFor="let item of done; trackBy: trackById">
+            <ion-card class="example-box" cdkDrag>
+              <ion-card-header>
+                <ion-card-title>{{ item.title_todo }}</ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-row>
+                  <p>{{ item.description_todo }}</p>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col size="10">
+                    <p><span>Creazione : </span> 10/20/1994</p>
+                    <p><span>Scadenza : </span> 10/20/1994</p>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-icon
+                      (click)="openModal(item)"
+                      size="small"
+                      color="warning"
+                      name="create-outline"
+                    ></ion-icon>
+                  </ion-col>
+                  <ion-col size="1">
+                    <ion-icon
+                      (click)="deleteTask(item)"
+                      name="trash"
+                      color="danger"
+                      size="small"
+                    ></ion-icon>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </div>
         </div>
       </div>
     </ion-card>
