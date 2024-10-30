@@ -12,10 +12,12 @@ ion-grid{
     overflow-y:scroll;
   }
 
-  ion-card-content{
+  .content-card{
     display: flex;
     flex-direction: column;
     gap: 30px;
+    height: 500px; 
+    overflow-y: scroll;
   }
 }
 
@@ -50,6 +52,7 @@ ion-modal#example-modal {
     flex-direction: column;
     gap: 30px;
     margin-top: 15px;
+    width: 95%;
   }
 
- 
+  

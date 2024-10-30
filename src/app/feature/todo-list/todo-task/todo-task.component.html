@@ -27,7 +27,7 @@
         >
           <div  *ngFor="let item of todo; trackBy: trackById">
 
-            <ion-car class="example-box" [cdkDragData]="item" cdkDrag>
+            <ion-card  [ngClass]="{ 'border-red': isDueSoon(item.date_task) }"class="example-box" [cdkDragData]="item" cdkDrag>
               <ion-card-header>
                 <ion-card-title>{{ item.title_todo }}</ion-card-title>
               </ion-card-header>
@@ -39,8 +39,8 @@
 
                 <ion-row>
                   <ion-col size="10">
-                    <p><span>Creazione : </span> 10/20/1994</p>
-                    <p><span>Scadenza : </span> 10/20/1994</p>
+                    <p><span>Creazione : </span>  {{ dateObj | date:'dd/MM/yyyy' }}</p>
+                    <p><span>Scadenza : </span>  {{item.date_task | date:'dd/MM/yyyy'}}</p>
                   </ion-col>
                   <ion-col size="1">
                     <ion-icon
@@ -60,7 +60,7 @@
                   </ion-col>
                 </ion-row>
               </ion-card-content>
-            </ion-car>
+            </ion-card>
           </div>
         </div>
       </div>
@@ -99,8 +99,8 @@
 
                 <ion-row>
                   <ion-col size="10">
-                    <p><span>Creazione : </span> 10/20/1994</p>
-                    <p><span>Scadenza : </span> 10/20/1994</p>
+                    <p><span>Creazione : </span>  {{ dateObj | date:'dd/MM/yyyy' }}</p>
+                    <p><span>Scadenza : </span>  {{item.date_task | date:'dd/MM/yyyy'}}</p>
                   </ion-col>
                   <ion-col size="1">
                     <ion-icon
@@ -148,7 +148,7 @@
           (cdkDropListDropped)="drop($event)"
         >
           <div *ngFor="let item of done; trackBy: trackById">
-            <ion-card class="example-box" cdkDrag>
+            <ion-card [ngClass]="{ 'border-red': isDueSoon(item.date_task) }" class="example-box" cdkDrag>
               <ion-card-header>
                 <ion-card-title>{{ item.title_todo }}</ion-card-title>
               </ion-card-header>
@@ -160,8 +160,8 @@
 
                 <ion-row>
                   <ion-col size="10">
-                    <p><span>Creazione : </span> 10/20/1994</p>
-                    <p><span>Scadenza : </span> 10/20/1994</p>
+                    <p><span>Creazione : </span>  {{ dateObj | date:'dd/MM/yyyy' }}</p>
+                    <p><span>Scadenza : </span>  {{item.date_task | date:'dd/MM/yyyy'}}</p>
                   </ion-col>
                   <ion-col size="1">
                     <ion-icon

@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgIf } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -9,6 +9,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -32,6 +33,7 @@ import { category_id } from '../../todo-list.component';
 export interface FormLogin {
   title_todo: FormControl<string | null>;
   description_todo: FormControl<string | null>;
+  date_task: FormControl<string | null>;
 }
 
 @Component({
@@ -40,7 +42,8 @@ export interface FormLogin {
   styleUrls: ['./create-task.component.scss'],
 
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule, NgIf, RouterLink],
+  imports: [IonicModule, ReactiveFormsModule, NgIf, RouterLink, CommonModule],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CreateTaskComponent implements OnInit, OnDestroy {
   private _fb = inject(FormBuilder);
@@ -60,24 +63,28 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
     this.form.patchValue({
       title_todo: this.itemTask.title_todo,
       description_todo: this.itemTask?.description_todo,
+      date_task: this.itemTask?.date_task,
     });
   }
 
   form = this._fb.group<FormLogin>({
     title_todo: this._fb.control('', [Validators.required]),
     description_todo: this._fb.control('', [Validators.required]),
+    date_task: this._fb.control('', [Validators.required]),
   });
 
   async submit() {
     if (this.form.invalid) return;
 
     try {
-      const { title_todo, description_todo } = this.form.value;
+      const { title_todo, description_todo, date_task } = this.form.value;
+      console.log({ title_todo, description_todo, date_task });
 
       if (this.itemTask) {
 
         this.itemTask.title_todo = title_todo;
         this.itemTask.description_todo = description_todo;
+        this.itemTask.date_task = date_task;
 
       } else if (this.data) {
 
@@ -88,6 +95,7 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
           idTask: itemTask,
           title_todo: title_todo || '',
           description_todo: description_todo || '',
+          date_task : date_task || ''
         });
 
       }
@@ -100,6 +108,20 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
       console.log(error);
     }
   }
+
+  isWeekday = (dateString: string) => {
+    console.log("Verificando fecha:", dateString);
+    
+    const date = new Date(dateString);
+    const today = new Date();
+
+    // Ignorar la parte de la hora para comparar solo la fecha
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    // Devuelve true si la fecha es hoy o en el futuro
+    return date >= today;
+  };
 
   ngOnDestroy(): void {
     if (this.taskSubscription) {

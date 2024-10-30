@@ -17,7 +17,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { MenuComponent } from 'src/app/shared/menu/menu.component';
 import { IonicModule } from '@ionic/angular';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Task } from '../task-service/task.service';
 import { CreateTaskComponent } from './modal-create-task/create-task.component';
@@ -37,10 +37,12 @@ import { Subscription } from 'rxjs';
     NgFor,
     RouterLink,
     CreateTaskComponent,
+    CommonModule,
   ],
 })
 export class TodoTaskComponent implements OnInit, OnDestroy {
   id: string = '';
+  dateObj = Date.now();
 
   private _taskService = inject(TaskService);
   private _route = inject(ActivatedRoute);
@@ -60,6 +62,8 @@ export class TodoTaskComponent implements OnInit, OnDestroy {
   done: Done[] = [];
 
   ngOnInit() {
+    const x = Date.now();
+    this.dateObj = x;
     this.taskSubscription = this._taskService.taskObservable$.subscribe(
       (task) => {
         this.tasks = task;
@@ -68,6 +72,7 @@ export class TodoTaskComponent implements OnInit, OnDestroy {
         this.done = task.done || [];
       }
     );
+    console.log(this.todo);
   }
 
   async drop(event: CdkDragDrop<any[]>) {
@@ -103,7 +108,6 @@ export class TodoTaskComponent implements OnInit, OnDestroy {
       };
 
       await this._taskService.updateTask(this.id, updatedTask);
-      
     }
   }
 
@@ -119,8 +123,7 @@ export class TodoTaskComponent implements OnInit, OnDestroy {
     this._taskService.sendTask(task);
   }
 
-  async openModal(item:any) {
-    
+  async openModal(item: any) {
     const modal = await this.modalController.create({
       component: CreateTaskComponent, // Tu componente del modal
       componentProps: {
@@ -129,25 +132,36 @@ export class TodoTaskComponent implements OnInit, OnDestroy {
         dataDone: this.tasks.done,
         data: this.tasks,
         id: this.id,
-        itemTask:item
+        itemTask: item,
       },
     });
     return await modal.present();
   }
 
-
   deleteTask(idTask: any) {
-
-    if(idTask.category){
-      
-      this.tasks[idTask.category] = this.tasks[idTask.category].filter((task:any) =>{
-        return task.idTask !== idTask.idTask
-      })
+    if (idTask.category) {
+      this.tasks[idTask.category] = this.tasks[idTask.category].filter(
+        (task: any) => {
+          return task.idTask !== idTask.idTask;
+        }
+      );
     }
 
     this._taskService.updateTask(this.id, this.tasks);
     this._taskService.sendTask(this.tasks);
   }
+
+  isDueSoon(deadline: string): boolean {
+    const today = new Date();
+    const deadlineDate = new Date(deadline);
+
+    const differenceInTime = deadlineDate.getTime() - today.getTime();
+//TODO : ver que es lo que hace getTime,
+    const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
+    return differenceInDays <= 1 && differenceInDays >= 0;
+  }
+  
 
   ngOnDestroy(): void {
     if (this.taskSubscription) {

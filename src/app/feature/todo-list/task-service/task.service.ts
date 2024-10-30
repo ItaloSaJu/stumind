@@ -17,18 +17,23 @@ export interface Todo {
   idTask: string,
   title_todo: string;
   description_todo: string;
+  date_task: string
 }
 export interface InPro {
   category?: string
   idTask: string,
   title_todo: string;
   description_todo: string;
+  date_task: string
+
 }
 export interface Done {
   category?: string
   idTask: string,
   title_todo: string;
   description_todo: string;
+  date_task: string
+
 }
 export interface Task {
   id?: string;
