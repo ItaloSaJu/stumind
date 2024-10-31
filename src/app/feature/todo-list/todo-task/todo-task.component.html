@@ -27,7 +27,7 @@
         >
           <div  *ngFor="let item of todo; trackBy: trackById">
 
-            <ion-card  [ngClass]="{ 'border-red': isDueSoon(item.date_task) }"class="example-box" [cdkDragData]="item" cdkDrag>
+            <ion-card  [ngClass]="{ 'border-red': isDueSoon(item.date_task) }" class="example-box" [cdkDragData]="item" cdkDrag>
               <ion-card-header>
                 <ion-card-title>{{ item.title_todo }}</ion-card-title>
               </ion-card-header>
@@ -87,7 +87,7 @@
           (cdkDropListDropped)="drop($event)"
         >
           <div *ngFor="let item of inPro; trackBy: trackById">
-            <ion-card class="example-box" [cdkDragData]="item" cdkDrag>
+            <ion-card [ngClass]="{ 'border-red': isDueSoon(item.date_task) }" class="example-box" [cdkDragData]="item" cdkDrag>
               <ion-card-header>
                 <ion-card-title>{{ item.title_todo }}</ion-card-title>
               </ion-card-header>
@@ -148,7 +148,7 @@
           (cdkDropListDropped)="drop($event)"
         >
           <div *ngFor="let item of done; trackBy: trackById">
-            <ion-card [ngClass]="{ 'border-red': isDueSoon(item.date_task) }" class="example-box" cdkDrag>
+            <ion-card  class="example-box" cdkDrag>
               <ion-card-header>
                 <ion-card-title>{{ item.title_todo }}</ion-card-title>
               </ion-card-header>

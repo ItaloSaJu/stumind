@@ -19,9 +19,6 @@ ion-card {
   border: 0.666667px solid rgb(38, 38, 38);
   border-radius: 15px;
 
-  // :hover{
-  //   max-height: auto;
-  // }
 }
 ion-grid {
   width: 100%;
@@ -113,7 +110,7 @@ ion-grid {
     margin-top: 10px;
     font-size: 14px;
     font-weight: 400;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 10px;
     color: #7f7f7f;
@@ -128,9 +125,9 @@ ion-grid {
     justify-content: center;
   }
 }
-// .example-box:hover ion-card-content {
-//   display: flex;
-// }
+.example-box:hover ion-card-content {
+  display: flex;
+}
 
 .cdk-drag-preview {
   box-sizing: border-box;
