@@ -1,0 +1,75 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <form >
+        <ion-label>Aggiungi Todo</ion-label>
+            <ion-input
+              formControlName="title_category"
+              fill="outline"
+              placeholder="Inserisci la Todo"
+            ></ion-input>
+      </form>
+    </ion-col>
+    <ion-col size="6">
+
+      <ion-title>
+        Todo
+      </ion-title>
+      <ion-list >
+        <ion-item>
+          <ion-checkbox (ionChange)="onCheckboxChange($event)" slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Get eggs"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Get milk"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Take out compost"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Pick up dry cleaning"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Call mom"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Order more dog food"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Think of new tasks for this demo"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+    <ion-col size="6">
+
+      <ion-title>
+        Complete
+      </ion-title>
+      <ion-list >
+        <ion-item>
+          <ion-checkbox [indeterminate]="true" slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Get eggs"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Get milk"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Take out compost"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
+          <ion-input aria-label="Task name" value="Think of new tasks for this demo"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>

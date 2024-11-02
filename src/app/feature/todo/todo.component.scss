@@ -1,0 +1,29 @@
+
+.namme-button-add{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .border-bottom-category{
+    border-bottom:  0.666667px solid rgb(38, 38, 38);
+    margin-bottom: 10px;
+    display: flex;
+    padding-bottom: 10px;
+    gap: 15px;
+  }
+  
+    
+    
+  
+    ion-title {
+      height: 10vh;
+      font-size: 40px;
+      font-weight: 600;
+      padding: 0;
+      
+    }
+    ion-button{
+      color: white;
+    }
+    
+   

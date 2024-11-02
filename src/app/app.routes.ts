@@ -9,6 +9,8 @@ import { MeteoComponent } from './feature/meteo/meteo.component';
 import { TodoListComponent } from './feature/task/todo-list.component';
 import { TodoTaskComponent } from './feature/task/todo-task/todo-task.component';
 import { AddTodoComponent } from './feature/task/modal-create-category/add-todo.component';
+import { TodoComponent } from './feature/todo/todo.component';
+import { TodolistComponent } from './feature/todo/todolist/todolist.component';
 
 export const routes: Routes = [
   {
@@ -40,11 +42,17 @@ export const routes: Routes = [
           },
         ],
       },
-      
       {
-        path: 'add-todo',
-        component: AddTodoComponent,
+        path: 'todo',
+        component: TodoComponent,
+        children: [
+          {
+            path: 'todo',
+            component: TodolistComponent,
+          },
+        ],
       },
+      
       {
         path: 'meteo',
         component: MeteoComponent,

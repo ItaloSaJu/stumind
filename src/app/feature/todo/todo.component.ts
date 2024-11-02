@@ -1,24 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { MenuComponent } from 'src/app/shared/menu/menu.component';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { NgFor } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { MenuComponent } from 'src/app/shared/menu/menu.component';
+import { AddTodoComponent } from '../task/modal-create-category/add-todo.component';
 import { ModalController } from '@ionic/angular/standalone';
-import { AddTodoComponent } from './modal-create-category/add-todo.component';
-import { TaskService } from './task-service/task.service';
+import { TaskService } from '../task/task-service/task.service';
+import { category_id } from '../task/todo-list.component';
+import { catchError, map, of } from 'rxjs';
 
-export interface category_id {
-  id: string;
-  title_category: string;
-}
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss'],
-
+  selector: 'app-todo',
+  templateUrl: './todo.component.html',
+  styleUrls: ['./todo.component.scss'],
   standalone: true,
   imports: [
     MenuComponent,
@@ -31,14 +27,15 @@ export interface category_id {
     AddTodoComponent,
   ],
 })
-export class TodoListComponent implements OnInit {
+export class TodoComponent  implements OnInit {
+
   private _taskService = inject(TaskService);
   private route = inject(Router);
 
 
   category_id: Array<category_id> = [];
   currentTaskId: string = '';
-  title_category: any ='Task'
+  title_category: any ='TodoList'
   
 
   constructor(private modalController: ModalController) {}
@@ -97,4 +94,5 @@ export class TodoListComponent implements OnInit {
     this.currentTaskId = id;
     // this.title_category = title_category
   }
+
 }
