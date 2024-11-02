@@ -11,7 +11,6 @@ export const privateGuard = (): CanActivateFn => {
 
     return authState.authState$.pipe(
       map((state) => {
-
         if (!state) {
           router.navigateByUrl('login');
           return false;
@@ -31,7 +30,7 @@ export const publicGuard = (): CanActivateFn => {
     return authState.authState$.pipe(
         map((state) => {
   
-          if (!state) {
+          if (state) {
             router.navigateByUrl('home');
             return false;
           }

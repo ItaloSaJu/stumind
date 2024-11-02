@@ -30,7 +30,7 @@ export class AddTodoComponent implements OnInit {
   private _fb = inject(FormBuilder);
   private _taskService = inject(TaskService);
   private modalController = inject(ModalController);
-
+  private route = inject(Router);
   categoryId: category_id[] = [];
   id: string = '';
   title_category: string = '';
@@ -72,9 +72,11 @@ export class AddTodoComponent implements OnInit {
 
       this.form.reset();
       this.modalController.dismiss();
+
     } else {
       // Si no hay ID, se crea una nueva tarea
       this.create();
+
     }
   }
 

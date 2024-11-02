@@ -14,8 +14,11 @@ export class AuthStateService {
         return authState(this._auth)
     }
 
+    get currentUser(){
+        return getAuth().currentUser;
+    }
+
     logout(){
-        
         return signOut(this._auth)
     }
 }

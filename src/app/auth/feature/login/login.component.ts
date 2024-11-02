@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
   async submitWithGoogle() {
     try {
       await this._authService.signInGoogle();
+      this._router.navigateByUrl('/home')
       console.log('logato');
     } catch (error) {
       console.log(error);

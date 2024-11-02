@@ -17,6 +17,7 @@ export const routes: Routes = [
     component: RegistratiComponent,
   },
   {
+    canActivate: [publicGuard()],
     path: 'login',
     component: LoginComponent,
   },

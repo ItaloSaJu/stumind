@@ -7,9 +7,12 @@ import {
   doc,
   Firestore,
   getDoc,
+  query,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
+import { AuthStateService } from 'src/app/shared/auth-state/auth-state.service';
 
 
 export interface Todo {
@@ -51,20 +54,31 @@ const PATH = 'tasks';
 export class TaskService {
 
   private taskSubject = new Subject<Task>();
+  private _firestore = inject(Firestore);
+  private _authState = inject(AuthStateService)
+  private _collection = collection(this._firestore, PATH);
+  private _query = query(
+    this._collection,
+    where('userId', '==', this._authState.currentUser?.uid)
+  )
+
   taskObservable$ = this.taskSubject.asObservable();
 
 
-  private _firestore = inject(Firestore);
-  private _collection = collection(this._firestore, PATH);
+
+  constructor(){
+    console.log(this._authState.currentUser);
+    
+  }
 
 
   create(task: Task) {
 
-    return addDoc(this._collection, task);
+    return addDoc(this._collection, {...task, userId: this._authState.currentUser?.uid});
   }
 
   allCategoryToDoList() {
-    return collectionData(this._collection, {idField:'id'});
+    return collectionData(this._query, {idField:'id'});
   }
 
   getTask(id:string){

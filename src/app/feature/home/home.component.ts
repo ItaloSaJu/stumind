@@ -29,4 +29,12 @@ export class HomeComponent   {
     this._router.navigateByUrl('login')
   }
 
+  logout(){
+    // this._router.navigateByUrl('/login')
+    this._authState.logout()
+    window.location.reload()
+    console.log('fuori');
+
+  }
+
 }
