@@ -4,11 +4,11 @@ import { RegistratiComponent } from './auth/feature/registrazione/registrati.com
 import { HomeComponent } from './feature/home/home.component';
 import { privateGuard, publicGuard } from './core/auth.guard';
 import { MenuComponent } from './shared/menu/menu.component';
-import { TodoListComponent } from './feature/todo-list/todo-list.component';
 import { ListDashboardComponent } from './feature/home/list-dashboard/list-dashboard.component';
 import { MeteoComponent } from './feature/meteo/meteo.component';
-import { AddTodoComponent } from './feature/todo-list/modal-create-category/add-todo.component';
-import { TodoTaskComponent } from './feature/todo-list/todo-task/todo-task.component';
+import { TodoListComponent } from './feature/task/todo-list.component';
+import { TodoTaskComponent } from './feature/task/todo-task/todo-task.component';
+import { AddTodoComponent } from './feature/task/modal-create-category/add-todo.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +31,7 @@ export const routes: Routes = [
         component: ListDashboardComponent,
       },
       {
-        path: 'todo',
+        path: 'task',
         component: TodoListComponent,
         children: [
           {

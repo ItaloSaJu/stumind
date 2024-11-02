@@ -14,7 +14,7 @@
       <ion-button
       routerDirection="root"
       *ngFor="let item of category_id"
-      routerLink="/home/todo/{{ item.id }}"
+      routerLink="/home/task/{{ item.id }}"
       (click)="idButton(item.id, item.title_category)"
       [fill]="currentTaskId === item.id ? 'solid' : 'outline'"
       [color]="currentTaskId === item.id ? '' : 'primary'"

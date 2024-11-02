@@ -28,7 +28,6 @@ import {
 import { Task } from '../../task-service/task.service';
 import { ModalController } from '@ionic/angular/standalone';
 import { Subscription } from 'rxjs';
-import { category_id } from '../../todo-list.component';
 
 export interface FormLogin {
   title_todo: FormControl<string | null>;

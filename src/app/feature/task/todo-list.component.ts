@@ -49,7 +49,7 @@ export class TodoListComponent implements OnInit {
       console.log(this.category_id);
       
       this.currentTaskId= this.category_id[0].id
-      this.route.navigate(['/home/todo', this.currentTaskId])
+      this.route.navigate(['/home/task', this.currentTaskId])
     }
     this.getCategoryId();
   }
