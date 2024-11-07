@@ -67,7 +67,6 @@ export class TaskService {
 
 
   constructor(){
-    console.log(this._authState.currentUser);
     
   }
 

@@ -139,6 +139,8 @@ export class TodoTaskComponent implements OnInit, OnDestroy {
   }
 
   deleteTask(idTask: any) {
+    console.log(idTask);
+    
     if (idTask.category) {
       this.tasks[idTask.category] = this.tasks[idTask.category].filter(
         (task: any) => {

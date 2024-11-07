@@ -1,9 +1,11 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { IonicModule, Platform } from '@ionic/angular';
 import { map, startWith, Subject } from 'rxjs';
 import { ListDashboardComponent } from "../../feature/home/list-dashboard/list-dashboard.component";
 import { HomeComponent } from "../../feature/home/home.component";
+import { RouterLink } from '@angular/router';
+import { AuthStateService } from '../auth-state/auth-state.service';
 
 @Component({
   selector: 'app-menu',
@@ -14,12 +16,14 @@ import { HomeComponent } from "../../feature/home/home.component";
     IonicModule,
     CommonModule,
     ListDashboardComponent,
-    HomeComponent
+    HomeComponent,
+    RouterLink
 ]
 })
 export class MenuComponent  implements OnInit {
 
- 
+  private _authState = inject(AuthStateService)
+
 
   constructor(private platform: Platform,) { }
 
@@ -39,4 +43,9 @@ export class MenuComponent  implements OnInit {
     this.viewSize$.next(this.platform.width());
   }
 
+  logout(){
+    this._authState.logout()
+    window.location.reload()
+
+  }
 }

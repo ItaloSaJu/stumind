@@ -1,75 +1,68 @@
 <ion-grid>
   <ion-row>
     <ion-col size="12">
-      <form >
-        <ion-label>Aggiungi Todo</ion-label>
+      <form [formGroup]="form" (submit)="submit()">
+        <ion-row>
+          <ion-col size="11" class="ion-col-input">
             <ion-input
-              formControlName="title_category"
+              formControlName="title_todo"
               fill="outline"
               placeholder="Inserisci la Todo"
             ></ion-input>
+          </ion-col>
+          <ion-col size="1">
+            <ion-button  [disabled]="disableButton" type="submit" color="secondary">Aggiungi</ion-button>
+          </ion-col>
+        </ion-row>
       </form>
     </ion-col>
-    <ion-col size="6">
-
-      <ion-title>
-        Todo
-      </ion-title>
-      <ion-list >
-        <ion-item>
-          <ion-checkbox (ionChange)="onCheckboxChange($event)" slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Get eggs"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Get milk"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Take out compost"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Pick up dry cleaning"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Call mom"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Order more dog food"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Think of new tasks for this demo"></ion-input>
-        </ion-item>
-      </ion-list>
+    <ion-col size="12" class="ion-padding-top">
+      <div class="title-icon">
+        <div class="container-title-badge">
+          <ion-title> Todo </ion-title>
+          <ion-badge color="warning">{{ TodosCount }}</ion-badge>
+        </div>
+        <ion-list lines="none">
+          <ng-container *ngFor="let item of todo">
+            <ion-item *ngIf="item.completed">
+              <ion-checkbox
+                [checked]="!item.completed"
+                (ionChange)="onCheckboxChange($event, item.idTask || '')"
+                slot="start"
+              ></ion-checkbox>
+              <div>{{ item.title_todo }}</div>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </div>
     </ion-col>
-    <ion-col size="6">
-
-      <ion-title>
-        Complete
-      </ion-title>
-      <ion-list >
-        <ion-item>
-          <ion-checkbox [indeterminate]="true" slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Get eggs"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Get milk"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Take out compost"></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-checkbox slot="start" aria-label="Toggle task completion"></ion-checkbox>
-          <ion-input aria-label="Task name" value="Think of new tasks for this demo"></ion-input>
-        </ion-item>
-      </ion-list>
+    <ion-col size="12" class="ion-padding-top">
+      <div class="title-icon">
+        <div class="container-title-badge">
+          <ion-title> Complete </ion-title>
+          <ion-badge color="success">{{ completedTodosCount }}</ion-badge>
+        </div>
+        <ion-list lines="none">
+          <ng-container *ngFor="let item of todo">
+            <ion-item *ngIf="!item.completed">
+              <ion-checkbox
+                labelPlacement="end"
+                [indeterminate]="true"
+                [checked]="!item.completed"
+                (ionChange)="onCheckboxChange($event, item.idTask || '')"
+                slot="start"
+              ></ion-checkbox>
+              <div class="completed-done">{{ item.title_todo }}</div>
+              <ion-icon
+                (click)="delete(item.idTask)"
+                name="trash"
+                color="danger"
+                slot="end"
+              ></ion-icon>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </div>
     </ion-col>
   </ion-row>
 </ion-grid>

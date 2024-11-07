@@ -1,0 +1,49 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-center">
+    <ion-col
+      size-md="12"
+      size-sm="12"
+      style="display: flex; gap: 30px; flex-direction: column"
+    >
+      <!-- Formulario de inicio de sesión -->
+      <ion-card-header>
+        <ion-card-title>Aggiungi categoria</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          
+          <div class="column">
+            <ion-label>Titulo</ion-label>
+            <ion-input
+              formControlName="title_category_todo"
+              fill="outline"
+              placeholder="Inserisci la categoria"
+            ></ion-input>
+          </div>
+
+          <ion-button class="add"  type="submit" color="secondary"
+            >Aggiungi</ion-button
+          >
+        </form>
+        <div class="box-items-category" >
+          <ion-item  *ngFor="let item of categoryId">
+            <ion-label>{{item.title_category}}</ion-label>
+            <ion-icon
+              (click)="update(item)"
+              color="warning"
+              name="create-outline"
+              slot="end"
+            ></ion-icon>
+            <ion-icon
+              (click)="delete(item.id)"
+              name="trash"
+              color="danger"
+              slot="end"
+            ></ion-icon>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-col>
+  </ion-row>
+</ion-grid>

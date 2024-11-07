@@ -49,6 +49,8 @@ export class AddTodoComponent implements OnInit {
 
   async submit() {
     if (this.id) {
+      console.log(this.id);
+      
       // Si el ID está presente, se actualiza la tarea
       const { title_category } = this.form.value;
 

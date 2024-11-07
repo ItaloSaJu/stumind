@@ -10,6 +10,8 @@ import { ModalController } from '@ionic/angular/standalone';
 import { TaskService } from '../task/task-service/task.service';
 import { category_id } from '../task/todo-list.component';
 import { catchError, map, of } from 'rxjs';
+import { ModalCreateTodoCategoryComponent } from './modal-create-todo-category/modal-create-todo-category.component';
+import { TodoService } from './todo-service/todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -31,6 +33,7 @@ export class TodoComponent  implements OnInit {
 
   private _taskService = inject(TaskService);
   private route = inject(Router);
+  private _TodoService = inject(TodoService)
 
 
   category_id: Array<category_id> = [];
@@ -41,24 +44,27 @@ export class TodoComponent  implements OnInit {
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {
-    this.title_category
+    
     if(this.category_id.length > 0){
-      console.log(this.category_id);
       
       this.currentTaskId= this.category_id[0].id
       this.route.navigate(['/home/task', this.currentTaskId])
     }
-    this.getCategoryId();
+    // this.getCategoryId();
+    this.getCategoryTodoId()
   }
 
-  getCategoryId() {
-    this._taskService
+  getCategoryTodoId() {
+    this._TodoService
       .allCategoryToDoList()
       .pipe(
         map((categories) => {
+          console.log(categories);
+          
           return categories.map((category) => ({
             id: category.id,
             title_category: category['title_category'],
+            todo : category['todo']
           }));
         }),
         catchError((error) => {
@@ -67,22 +73,19 @@ export class TodoComponent  implements OnInit {
         })
       )
       .subscribe((category_id) => {
-        // console.log(category_id); // TODO : revisar porque salen muchos estampados
-         console.log(category_id); 
+        console.log(category_id);
+        
         this.category_id = category_id;
-        console.log('currentid ', this.currentTaskId);
-        
-        // const x = category_id.filter(x => x.id !== this.currentTaskId)
-        // this.title_category = x[0].title_category
-        
       });
 
   }
 
-  async openModal() {
+
+  async openModalTodo() {
+    console.log(this.category_id);
     
     const modal = await this.modalController.create({
-      component: AddTodoComponent,
+      component: ModalCreateTodoCategoryComponent,
       componentProps: { 
         categoryId: this.category_id
       }
@@ -90,8 +93,10 @@ export class TodoComponent  implements OnInit {
     return await modal.present();
   }
 
-  idButton(id: string, title_category:string) {
+  idButton(id: string, title_category:any) {
     this.currentTaskId = id;
+    console.log(title_category);
+    
     // this.title_category = title_category
   }
 

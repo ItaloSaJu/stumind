@@ -3,7 +3,7 @@
     <ion-col size="12" class="namme-button-add">
       <ion-title>{{title_category}} </ion-title>
       <ion-button
-        (click)="openModal()"
+        (click)="openModalTodo()"
         id="open-custom-dialog"
         color="success"
         fill="outline"
@@ -15,7 +15,7 @@
       routerDirection="root"
       *ngFor="let item of category_id"
       routerLink="/home/todo/{{ item.id }}"
-      (click)="idButton(item.id, item.title_category)"
+      (click)="idButton(item.id, item)"
       [fill]="currentTaskId === item.id ? 'solid' : 'outline'"
       [color]="currentTaskId === item.id ? '' : 'primary'"
         >{{ item.title_category }}

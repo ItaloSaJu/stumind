@@ -4,11 +4,73 @@ ion-checkbox::part(container) {
 
 ion-grid{
     width: 100%;
+}
 
-    // ion-row{
-    //     width: 50%;
-    //     display: flex;
-    //     flex-direction: column;
-    // }
+ion-list{
+  width: 100%;
+  background: transparent;
+  padding: 0;
+}
 
+ion-item{
+  --background: transparent;
+  --inner-border-width	:100%;
+}
+
+ion-button{
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+ion-title{
+  padding: 0;
+}
+ion-input{
+  padding: 0 !important;
+}
+
+.completed-done{
+  color: gray;
+  text-decoration: line-through;
+}
+
+.ion-col-input{
+  padding-left: 0;
+}
+
+.title-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .container-title-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    height: 50px;
+    ion-title {
+      font-weight: 600;
+      padding: 0;
+      margin: 0;
+      font-size: 17px;
+      height: 100px;
+      display: flex;
+      gap: 5px;
+    }
+    ion-badge {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      color: black;
+    }
+  }
+  
 }

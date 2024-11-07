@@ -47,7 +47,7 @@ export const routes: Routes = [
         component: TodoComponent,
         children: [
           {
-            path: 'todo',
+            path: ':id',
             component: TodolistComponent,
           },
         ],
