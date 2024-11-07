@@ -154,3 +154,65 @@ ion-grid {
 .border-red {
   border: 2px solid red !important;
 }
+
+@media screen and (max-width: 997px) {
+  ion-card {
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+  }
+  ion-row{
+      width: 100%;
+      ion-col{
+        padding: 10px 0 0 0 ;
+      }
+      .button-overflow{
+        overflow: scroll;
+      }
+  }
+ 
+
+  ion-card-title{
+    font-size: 15px;
+  }
+
+  .example-container {
+    .title-icon {
+      .container-title-badge {
+       
+        gap: 13px;
+        ion-title {
+          font-size: 15px;
+       
+        }
+        
+      }
+      
+    }
+  }
+  ion-title {
+    font-size: 25px;
+  }
+  
+  
+
+  ion-button{
+    font-size: 13px;
+  }
+
+  .example-box {
+   
+  
+    ion-card-header {
+      ion-card-title {
+        font-size: 13px;
+      }
+    }
+    ion-card-content {
+      span, p {
+        font-size: 13px;
+      }
+    }
+  }
+
+}

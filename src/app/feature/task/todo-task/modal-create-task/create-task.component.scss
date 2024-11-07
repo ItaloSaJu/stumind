@@ -7,10 +7,7 @@ ion-grid{
   ion-row{
     width: 100%;
   }
-  .box-items-category{
-    max-height: 320px;
-    overflow-y:scroll;
-  }
+  
 
   .content-card{
     display: flex;
@@ -18,6 +15,12 @@ ion-grid{
     gap: 30px;
     height: 500px; 
     overflow-y: scroll;
+  }
+}
+
+ion-card-header{
+  ion-item{
+    --background: none
   }
 }
 

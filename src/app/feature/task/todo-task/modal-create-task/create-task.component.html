@@ -2,45 +2,50 @@
   <ion-row class="ion-justify-content-center">
     <ion-col size-sm="12">
       <!-- Formulario de inicio de sesión -->
-       <ion-card>
 
-         <ion-card-header>
-           <ion-card-title>Aggiungi Task</ion-card-title>
-         </ion-card-header>
-   
-         <ion-card-content class="content-card">
-           <form [formGroup]="form" (ngSubmit)="submit()">
-             <div class="column">
-               <ion-label>Title todo</ion-label>
-               <ion-input
-                 formControlName="title_todo"
-                 fill="outline"
-                 placeholder="Inserisci la categoria"
-               ></ion-input>
-             </div>
-             <div class="column">
-               <ion-label>description Title</ion-label>
-               <ion-input
-                 formControlName="description_todo"
-                 fill="outline"
-                 placeholder="Inserisci la categoria"
-               ></ion-input>
-             </div>
-             <div class="column">
-               <ion-label>Scadenza task</ion-label>
-               <ion-datetime
-                 presentation="date"
-                 formControlName="date_task"
-                 [isDateEnabled]="isWeekday"
-               ></ion-datetime>
-             </div>
-   
-             <ion-button expand="" class="accedi" type="submit" color="secondary"
-               >AGGIUNGI</ion-button
-             >
-           </form>
-         </ion-card-content>
-       </ion-card>
+      <ion-card-header>
+        <ion-item lines="none">
+          <ion-icon
+            (click)="closeModal()"
+            name="close-outline"
+            slot="end"
+          ></ion-icon>
+        </ion-item>
+        <ion-card-title>Aggiungi Task</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="content-card">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="column">
+            <ion-label>Title todo</ion-label>
+            <ion-input
+              formControlName="title_todo"
+              fill="outline"
+              placeholder="Inserisci la categoria"
+            ></ion-input>
+          </div>
+          <div class="column">
+            <ion-label>description Title</ion-label>
+            <ion-input
+              formControlName="description_todo"
+              fill="outline"
+              placeholder="Inserisci la categoria"
+            ></ion-input>
+          </div>
+          <div class="column">
+            <ion-label>Scadenza task</ion-label>
+            <ion-datetime
+              presentation="date"
+              formControlName="date_task"
+              [isDateEnabled]="isWeekday"
+            ></ion-datetime>
+          </div>
+
+          <ion-button expand="" class="accedi" type="submit" color="secondary"
+            >AGGIUNGI</ion-button
+          >
+        </form>
+      </ion-card-content>
     </ion-col>
   </ion-row>
 </ion-grid>

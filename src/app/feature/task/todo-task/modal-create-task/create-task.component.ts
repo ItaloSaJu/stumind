@@ -128,4 +128,9 @@ export class CreateTaskComponent implements OnInit, OnDestroy {
       this.taskSubscription.unsubscribe();
     }
   }
+
+  closeModal(){
+    this.modalController.dismiss();
+
+  }
 }

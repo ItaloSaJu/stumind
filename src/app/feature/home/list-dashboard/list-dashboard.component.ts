@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLinkWithHref } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from 'src/app/shared/menu/menu.component';
 
@@ -9,7 +10,8 @@ import { MenuComponent } from 'src/app/shared/menu/menu.component';
   standalone: true,
   imports: [
     MenuComponent,
-    IonicModule
+    IonicModule,
+    RouterLinkWithHref
   ]
 })
 export class ListDashboardComponent  implements OnInit {

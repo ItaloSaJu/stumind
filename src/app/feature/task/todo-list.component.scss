@@ -26,4 +26,32 @@
     color: white;
   }
   
- 
+  @media screen and (max-width: 997px) {
+    ion-card {
+      margin: 0;
+      padding: 0;
+    }
+    ion-grid{
+        ion-row{
+            width: 100%;
+            ion-col{
+              padding-left: 0;
+            }
+            .button-overflow{
+              overflow: scroll;
+            }
+        }
+    }
+
+
+    ion-title {
+      font-size: 25px;
+    }
+    
+    
+
+    ion-button{
+      font-size: 13px;
+    }
+  
+  }

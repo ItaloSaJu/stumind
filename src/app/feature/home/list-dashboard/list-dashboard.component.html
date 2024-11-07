@@ -1,9 +1,9 @@
 <ion-grid>
-  <ion-row>
+  <ion-row >
     <ion-col size="12">
       <ion-title> DASHBOARD </ion-title>
     </ion-col>
-    <ion-col size="4">
+    <ion-col sizeXs="12" sizeSm="6" sizeMd="6">
       <ion-card>
         <ion-card-header>
           <ion-row>
@@ -21,7 +21,7 @@
               </svg>
             </ion-col>
             <ion-col size="6">
-              <ion-button expand="block" fill="outline">Conneta</ion-button>
+              <ion-button [routerLink]="['/home/task']" expand="block" fill="outline">Conneta</ion-button>
             </ion-col>
           </ion-row>
           <ion-card-title>TASK</ion-card-title>
@@ -32,7 +32,7 @@
         </ion-card-content>
       </ion-card>
     </ion-col>
-    <ion-col size="4">
+    <ion-col sizeXs="12" sizeSm="6" sizeMd="6">
       <ion-card>
         <ion-card-header>
           <ion-row>
@@ -50,7 +50,7 @@
               </svg>
             </ion-col>
             <ion-col size="6">
-              <ion-button expand="block" fill="outline">Conneta</ion-button>
+              <ion-button  [routerLink]="['/home/todo']" expand="block" fill="outline">Conneta</ion-button>
             </ion-col>
           </ion-row>
           <ion-card-title>METEO</ion-card-title>

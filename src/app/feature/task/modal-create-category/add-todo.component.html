@@ -1,12 +1,21 @@
 <ion-grid>
   <ion-row class="ion-justify-content-center">
     <ion-col
-      size-md="12"
-      size-sm="12"
-      style="display: flex; gap: 30px; flex-direction: column"
+    size-md="12"
+    size-sm="12"
+    style="display: flex; gap: 30px; flex-direction: column"
     >
-      <!-- Formulario de inicio de sesión -->
-      <ion-card-header>
+    <!-- Formulario de inicio de sesión -->
+    <ion-card-header>
+      <ion-item  lines="none">
+
+        <ion-icon
+        (click)="closeModal()"
+        name="close-outline"
+        slot="end"
+       
+      ></ion-icon>
+      </ion-item>
         <ion-card-title>Aggiungi categoria</ion-card-title>
       </ion-card-header>
 

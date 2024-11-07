@@ -125,4 +125,9 @@ export class AddTodoComponent implements OnInit {
     this._taskService.deleteTask(id);
     this.modalController.dismiss();
   }
+  
+  closeModal(){
+    this.modalController.dismiss();
+
+  }
 }

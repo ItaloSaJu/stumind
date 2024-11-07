@@ -61,3 +61,14 @@ ion-item{
   }
 }
 
+@media screen and (max-width: 997px) {
+  ion-grid{
+    
+    .box-items-category{
+      max-height: 400px;
+    }
+  
+      
+  }
+
+}

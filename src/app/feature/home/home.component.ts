@@ -1,5 +1,5 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { AuthStateService } from 'src/app/shared/auth-state/auth-state.service';
 import { MenuComponent } from "../../shared/menu/menu.component";
 import { IonicModule, Platform } from '@ionic/angular';
@@ -18,7 +18,8 @@ import { AsyncPipe, NgIf } from '@angular/common';
     ListDashboardComponent,
     RouterLink,
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    
 ]
 })
 export class HomeComponent   {
